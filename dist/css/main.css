@@ -1,0 +1,360 @@
+body {
+    text-align: center;
+}
+
+.zone1 {
+    padding-top: 50px;
+}
+
+.searchField {
+    width: 600px;
+    padding: 20px;
+    margin: 30px auto;
+}
+
+.searchResult {
+    width: 1200px;
+    padding: 20px;
+    margin: 30px auto;
+    height: 910px;
+    
+
+}
+
+.searchResult .searchBlock {
+    text-align: left;
+    font-size: 20px;
+    
+    margin-left: 10px;
+    box-shadow: none;
+    border: 1px solid black;
+}
+.searchResult .searchBlock .search {
+    font-weight: 700;
+}
+
+.filter {
+    display: block;
+    margin: 0px;
+    padding: 10px;
+    min-height: 320px;
+    text-align: left;
+}
+
+.filter h5 {
+    margin-bottom: 5px;
+}
+
+#filterDepart {
+    background: #ff5722;
+    color: white;
+    padding: 3px;
+}
+
+#filterReturn {
+    background: #0f9d58;
+    color: white;
+    padding: 3px;
+}
+
+.filter p {
+    font-size: 12px;
+}
+
+.slider {
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.timeLabel {
+    text-align: center;
+}
+
+#filters {
+    
+}
+
+#outbound {
+    background: #ff5722;
+    display: block;
+    height: 50px;
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+
+
+#outbound a {
+    text-decoration: none;
+    color: white;
+    line-height: 50px;
+
+}
+
+#inbound {
+    background: #0f9d58;
+    display: block;
+    height: 50px;
+    text-align: left;
+    color: white;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+#inbound a {
+    text-decoration: none;
+    color: white;
+    line-height: 50px;
+}
+
+#outboundResult {
+    height: 330px;
+    background-color: #CCC;
+    margin: 10px 0px;
+}
+
+#inboundResult {
+    height: 330px;
+    background-color: #CCC;
+    margin: 10px 0px;
+}
+
+.resultPanel {
+    padding-left: 10px;
+}
+
+.searchResult .navbar .navbar-brand {
+    color: white;
+}
+
+.dateTitle {
+    font-size: 14px;
+    color: rgba(255,255,255,.6);
+    line-height: 59px;
+}
+
+.form-horizontal {
+    text-align: left;
+}
+
+.form-horizontal .navbar {
+    margin: 0px 27px;
+    padding: 0px;
+    background-color: white;
+}
+
+.form-horizontal .navbar .collapse {
+    padding: 0px;
+}
+
+.form-horizontal .navbar .collapse ul{
+    border: 1px solid #4285f4;
+}
+
+.form-horizontal .navbar .collapse ul .active{
+    background-color: #4285f4;
+    
+}
+.form-horizontal .navbar .collapse ul .active a{
+    color: white;
+}
+
+.form-horizontal .navbar .collapse ul li a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: black;
+}
+
+.form-horizontal .btn-group {
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+.form-horizontal .searchRadio {
+    margin-left: 18px;
+    margin-bottom: 20px;
+}
+
+.form-horizontal .searchRadio label:first-child{
+    margin-right: 10px;
+}
+
+#searchBtn {
+    margin-left: 18px;
+    margin-top: 20px;
+}
+
+#changeBtn {
+    margin: -6px 0px 0px 18px;
+}
+
+.well .searchText {
+    width: 200px;
+    display: inline-block;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.control-label {
+    font-weight: 400;
+}
+
+.passNumber {
+    margin-top: 0px;
+}
+
+.select {
+    height: 30px;
+}
+
+.ui-autocomplete {
+    border: 1px solid black;
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+    border: 1px solid black;
+    background: #4285f4;
+    color: white;
+
+}
+
+.ui-datepicker {
+    padding: 0px;
+    border: 1px solid black;
+    border-radius: 0px;
+
+}
+
+.ui-datepicker .ui-datepicker-header {
+    background: #4285f4;
+    color: white;
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    border-radius: 0px;
+}
+
+.ui-datepicker .ui-datepicker-header .ui-corner-all{
+    border-radius: 0px;
+}
+
+.ui-datepicker .ui-datepicker-header .ui-corner-all:hover {
+    background: rgba(0,0,0,.05);
+    border: 0px;
+    color: white;
+    cursor: pointer;
+}
+
+.ui-datepicker .ui-datepicker-calendar {
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.ui-datepicker .ui-datepicker-calendar tbody tr td a{
+    border: 0px;
+    background: #EEE;
+}
+
+.ui-datepicker .ui-datepicker-calendar tbody tr td a:hover{
+    background: #4285f4;
+    color: white;
+}
+
+.filterLabel {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.monthResult {
+    border: 1px solid #4285f4;
+    display: block;
+    height: 59px;
+    text-align: left;
+    color: #4285f4;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.monthResult a {
+    text-decoration: none;
+    color: #4285f4;
+    line-height: 59px;
+}
+
+.monthHead {
+    height: 59px;
+    margin-bottom: 10px;
+}
+
+.monthHead h1{
+    margin-top: 10px;
+}
+
+.monthLittle {
+    font-size: 14px;
+    color: #4285f4;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+text {
+  font-size:14px;
+  font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;;
+}
+
+.d3-tip {
+  line-height: 1.3;
+  font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;;
+  font-weight: 200;
+  font-size:14px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  text-align: left;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:before {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25B2";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:before {
+  margin: 0 0 -2px 0;
+  bottom: 100%;
+  left: 0;
+}
+
+#wrap1 {
+   width:100%;
+   margin:0 auto;
+   height: 100px;
+}
+
+#figure2 {
+    width: 50%;
+    float: left;
+    height: 100px;
+    background-color: #CCC;
+}
+#figure3 {
+    width: 50%;
+    height: 100px;
+    float: right;
+    background-color: #CCC;
+}

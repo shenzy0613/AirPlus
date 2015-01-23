@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8">
+<html ng-app="AirPlus">
+<head>
+        <meta charset="utf-8">
+        <title> Find the most suitable flight for you</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+        <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="dist/css/ripples.min.css" rel="stylesheet">
+        <link href="dist/css/material-wfont.min.css" rel="stylesheet">
+        <link href="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="dist/css/main.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="js/interface.js"></script>
+        <link rel="stylesheet" href="dist/css/myStyle.css">
+</head>
+    
+<body ng-controller="searchBox" ng-init="roundTrip=true;">
+  <div ng-show="!showResult" class="zone1">
+    <h1>Air+</h1>
+    <div class="well searchField" >
+      <form class="form-horizontal">
+        <div class="navbar navbar-default">
+          <div class="navbar-collapse collapse navbar-responsive-collapse">  
+              <ul class="nav navbar-nav" ng-init="selectedTab = 'Fixed'">
+                <li ng-class="{'active':selectedTab === 'Fixed'}" ng-click="selectedTab = 'Fixed'">   
+                   <a href="javascript:void(0)">Exact Dates</a>
+                </li>  
+                <li ng-class="{'active':selectedTab === 'Flex'}" ng-click="selectedTab = 'Flex'">   
+                   <a href="javascript:void(0)">Flexible Days</a>
+                </li>  
+              </ul>
+          </div>
+        </div>
+        <fieldset>
+          <div class="radio radio-primary searchRadio">
+              <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" ng-model="trip">
+                  Round Trip
+              </label>
+              <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" ng-model="trip">
+                  One way
+              </label>
+          </div>
+          <div class="form-group searchText">
+            <input class="form-control floating-label tags" ng-model="flyFrom" id="fromLocation" type="text" placeholder="Flying from" ng-change="changeFrom()">
+          </div>
+          <div class="form-group searchText">
+            <input class="form-control floating-label tags" ng-model="flyTo" id="toLocation" type="text" placeholder="Flying to" ng-change="changeTo()">
+          </div>
+          <br>
+          <div ng-hide="selectedTab === 'Flex'">
+            <div class="form-group searchText">
+              <input class="form-control floating-label datepicker" ng-model="departDate" id="departDate" type="text" name="departingDate" placeholder="Departing">
+            </div>
+            <div class="form-group searchText" ng-hide="trip=='option2'">
+              <input class="form-control floating-label datepicker" ng-model="returnDate" id="returnDate" type="text" name="returningDate" placeholder="Returning">
+            </div>
+          </div>
+          <div class="select" ng-hide="selectedTab == 'Fixed'">
+            <label for="select" class="col-lg-3 control-label">Depart Month</label>
+            <div class="col-lg-4">
+              <select class="form-control" id="select" ng-model="departMonth">
+                            <option>January 2015</option>
+                            <option>February 2015</option>
+                            <option>March 2015</option>
+                            <option>April 2015</option>
+                            <option>May 2015</option>
+                            <option>June 2015</option>
+                            <option>July 2015</option>
+              </select>
+            </div>
+          </div>
+          <div class="select" ng-hide="selectedTab === 'Fixed'">
+            <label for="select" class="col-lg-3 control-label">Trip Length</label>
+            <div class="col-lg-4">
+              <select class="form-control" id="select">
+                            <option>0 day</option>
+                            <option>1 day</option>
+                            <option>2 days</option>
+                            <option>3 days</option>
+                            <option>4 days</option>
+                            <option>5 days</option>
+                            <option>6 days</option>
+                            <option>7 days</option>
+                            <option>8 days</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-10">
+              <button type="submit" class="btn btn-primary" id="searchBtn" ng-click="showResult = true">Search</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="well searchResult" ng-show="showResult && (selectedTab === 'Fixed')">
+    <div class="monthHead">
+        <div class="col-lg-2">
+          <h1>Air+</h1>
+        </div>
+        <div class="col-lg-10 resultPanel">
+          <div class="monthResult">
+              <a> {{flyFromAbbr}} &harr; {{flyToAbbr}} &nbsp;&nbsp;| &nbsp;&nbsp; {{departDate.substring(0,5)}} &harr; {{returnDate.substring(0,5)}}</a>
+              <button type="submit" class="btn btn-primary" id="changeBtn" ng-click="showResult = false">Change</button>
+          </div>
+        </div>
+    </div>
+    <div class="col-lg-2 well filter" id="filters">
+          <h4>Filters</h4>
+            <h5 id="filterDepart">Flight to {{flyToAbbr}}</h5>
+            <p class="filterLabel">Departure Time</p>
+            <p class="timeLabel"> 
+              <span class='noUiLable-lower' id='lowerLabel1' style='font-size: 12px; font-weight: 700;'>0:00</span><span> - </span><span class='noUiLable-upper' id='upperLabel1' style='font-size: 12px; font-weight: 700;'>24:00</span>
+            </p>
+            <div class="slider" id="slider-range"></div>
+            <p class="filterLabel">Arrival Time</p>
+            <p class="timeLabel">
+              <span class='noUiLable-lower' id='lowerLabel2' style='font-size: 12px; font-weight: 700; '>0:00</span><span> - </span><span class='noUiLable-upper' id='upperLabel2' style='font-size: 12px; font-weight: 700; '>24:00</span>
+            </p>
+            <div class="slider" id="slider-range2"></div>
+            <div ng-hide="trip=='option2'">
+              <h5 id="filterReturn">Flight to {{flyFromAbbr}}</h5>
+              <p class="filterLabel">Departure Time</p>
+              <p class="timeLabel">
+                <span class='noUiLable-lower' id='lowerLabel3' style='font-size: 12px; font-weight: 700; '>0:00</span><span> - </span><span class='noUiLable-upper' id='upperLabel3' style='font-size: 12px; font-weight: 700; '>24:00</span>
+              </p>
+              <div class="slider" id="slider-range3"></div>
+              <p class="filterLabel">Arrival Time</p>
+              <p class="timeLabel">
+                <span class='noUiLable-lower' id='lowerLabel4' style='font-size: 12px; font-weight: 700; '>0:00</span><span> - </span><span class='noUiLable-upper' id='upperLabel4' style='font-size: 12px; font-weight: 700; '>24:00</span>
+              </p>
+              <div class="slider" id="slider-range4"></div>
+            </div>
+    </div>
+    <div class="col-lg-10 resultPanel">
+          <div id="outbound">  
+              <a>Select departure to {{flyToAbbr}} &nbsp;<span class="dateTitle"> {{departDate.substring(0,5)}} </span></a>
+          </div>
+          <div id="figure1"></div>
+          <div id="wrap1">
+            <div id="figure2"></div>
+            <div id="figure3"></div>
+          </div>
+          <div id="inbound" ng-hide="trip=='option2'">
+              <a>Select return to {{flyFromAbbr}} &nbsp;<span class="dateTitle"> {{returnDate.substring(0,5)}} </span></a>
+          </div>
+          <div id="figure4" ng-hide="trip=='option2'">
+          </div>
+    </div>  
+    
+  </div>
+  <div class="well searchResult" ng-show="showResult && (selectedTab === 'Flex')">
+      <div class="monthHead">
+        <div class="col-lg-2">
+          <h1>Air+</h1>
+        </div>
+        <div class="col-lg-10 resultPanel">
+          <div class="monthResult">  
+              <a> {{flyFromAbbr}} &harr; {{flyToAbbr}} &nbsp; <span class="monthLittle">{{departMonth}}</span> </a>
+              <button type="submit" class="btn btn-primary" id="changeBtn" ng-click="showResult = false">Change</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div id="outboundResult">
+        </div>
+      </div>
+  </div>
+  <script src="js/myUISlider.js"></script>
+  <script src="js/d3_vis.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="js/noName.js"></script>
+  <script src="dist/js/ripples.min.js"></script>
+  <script src="dist/js/material.min.js"></script>
+  <script src="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+</body>
+</html>

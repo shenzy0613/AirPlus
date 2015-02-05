@@ -23,8 +23,8 @@
         <link rel="stylesheet" href="dist/css/myStyle.css">
 </head>
     
-<body ng-controller="searchBox" ng-init="roundTrip=true;">
-  <div ng-show="!showResult" class="zone1">
+<body ng-controller="searchBox" ng-init="roundTrip=true;departureSelected=false;">
+  <div class="zone1" id="zone1">
     <h1>Air+</h1>
     <div class="well searchField" >
       <form class="form-horizontal">
@@ -97,13 +97,13 @@
             </div>
           </div>
           <div class="col-lg-10">
-              <button type="submit" class="btn btn-primary" id="searchBtn" ng-click="showResult = true">Search</button>
+              <button type="submit" class="btn btn-primary" id="searchBtn" onclick="startSearch()" ng-click="showResult = true">Search</button>
           </div>
         </fieldset>
       </form>
     </div>
   </div>
-  <div class="well searchResult" ng-show="showResult && (selectedTab === 'Fixed')">
+  <div id="zone2" class="well searchResult sample-show-hide" ng-show="(selectedTab === 'Fixed')">
     <div class="monthHead">
         <div class="col-lg-2">
           <h1>Air+</h1>
@@ -111,7 +111,7 @@
         <div class="col-lg-10 resultPanel">
           <div class="monthResult">
               <a> {{flyFromAbbr}} &harr; {{flyToAbbr}} &nbsp;&nbsp;| &nbsp;&nbsp; {{departDate.substring(0,5)}} &harr; {{returnDate.substring(0,5)}}</a>
-              <button type="submit" class="btn btn-primary" id="changeBtn" ng-click="showResult = false">Change</button>
+              <button type="submit" class="btn btn-primary" id="changeBtn" onclick="changeSearch()"ng-click="showResult = false">Change</button>
           </div>
         </div>
     </div>
@@ -146,7 +146,20 @@
           <div id="outbound">  
               <a>Select departure to {{flyToAbbr}} &nbsp;<span class="dateTitle"> {{departDate.substring(0,5)}} </span></a>
           </div>
-          <div id="figure1"></div>
+          <div id="figure1" ></div>
+          <div id="chart1" class="resultPanel" style="display:none;">
+            <div class="col-lg-3">
+              Flight Number: <span id="chosenFlightNumber" style='float:right;'></span> <br>
+              Date: <span id="chosenFlightDate" style='float:right;'></span> <br>
+              Departure Time: <span id="chosenFlightDept" style='float:right;'></span> <br>
+              Arrival Time: <span id="chosenFlightArr" style='float:right;'></span> <br>
+              Aircraft Type: <span id="chosenFlightType" style='float:right;'></span> <br>
+              Price: <span style='color: yellow;float:right;'>from $<span id="chosenFlightPrice" ></span></span> <br>
+            </div>
+            <div class="col-lg-3">
+              <button type="submit" class="btn btn-primary" id="changeBtn2" onclick="changeDeparture()">Change</button>
+            </div>
+          </div>
           <div id="inbound" ng-hide="trip=='option2'">
               <a>Select return to {{flyFromAbbr}} &nbsp;<span class="dateTitle"> {{returnDate.substring(0,5)}} </span></a>
           </div>

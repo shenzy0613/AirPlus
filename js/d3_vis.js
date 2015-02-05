@@ -1,3 +1,38 @@
+function timeFormat(time1, time2) {
+	var departHours = (new Date(time1)).getHours();
+	var departMinutes = (new Date(time1)).getMinutes();
+	var arriveHours = (new Date(time2)).getHours();
+	var arriveMinutes = (new Date(time2)).getMinutes();
+
+	if(departMinutes<10)
+	  var departMinutesString = '0' + departMinutes;
+	else
+	  var departMinutesString = departMinutes;
+
+	if(arriveMinutes<10)
+	  var arriveMinutesString = '0' + arriveMinutes;
+	else
+	  var arriveMinutesString = arriveMinutes;
+
+	return {"depart": departHours +":"+departMinutesString, 
+			"arrive": arriveHours +":"+arriveMinutesString};
+}
+
+function changeDeparture() {
+	$("#figure1").slideDown();
+	$('#chart1').slideUp();
+}
+
+function startSearch() {
+	$('#zone1').slideUp();
+	$("#zone2").slideDown();
+}
+
+function changeSearch() {
+	$("#zone1").slideDown();
+	$('#zone2').slideUp();
+}
+
 var margin = {top: 15, right: 10, bottom: 10, left: 0},
     width = $("#figure1").width() - margin.left - margin.right,
     height = 260 - margin.top - margin.bottom;
@@ -19,24 +54,9 @@ var margin = {top: 15, right: 10, bottom: 10, left: 0},
 	    .attr('class', 'd3-tip')
 	    .offset([145, 0])
 	    .html(function(d) {
-	      var departHours = (new Date(d[5])).getHours();
-	      var departMinutes = (new Date(d[5])).getMinutes();
-	      var arriveHours = (new Date(d[6])).getHours();
-	      var arriveMinutes = (new Date(d[6])).getMinutes();
-
-	      if(departMinutes<10)
-	        var departMinutesString = '0' + departMinutes;
-	      else
-	        var departMinutesString = departMinutes;
-
-	      if(arriveMinutes<10)
-	        var arriveMinutesString = '0' + arriveMinutes;
-	      else
-	        var arriveMinutesString = arriveMinutes;
-
 	      return "Flight Number:&nbsp; <span style='color:yellow;float:right;'>" +  d[0] + "</span><br>"
-	              +"Depart time: <span style='color:yellow;float:right;'>" + departHours +":"+departMinutesString + "</span><br>"
-	              +"Arrive time: <span style='color:yellow;float:right;'>" + arriveHours +":"+arriveMinutesString + "</span><br>"
+	              +"Depart time: <span style='color:yellow;float:right;'>" + timeFormat(d[5],d[6]).depart + "</span><br>"
+	              +"Arrive time: <span style='color:yellow;float:right;'>" + timeFormat(d[5],d[6]).arrive + "</span><br>"
 	              +"Aircraft type: <span style='color:yellow;float:right;'>" + d[7] + "</span><br>"
 	              +"Price: <span style='color:yellow;float:right;'>$" + d[2] + "</span><br>";
 	  })
@@ -137,9 +157,9 @@ var margin = {top: 15, right: 10, bottom: 10, left: 0},
 	      	if(d[1] == datatotal[0][5]) 
 	      		return margin.top+10+d[8]*30
 	      	else if (new Date(d[1]).getTime() < new Date(datatotal[0][5]).getTime())
-	      		return margin.top+120+d[8]*15
+	      		return margin.top+122+d[8]*13
 	      	else
-	      		return margin.top+180+d[8]*15
+	      		return margin.top+182+d[8]*13
 	      })
 	      .attr('height', function(d) { 
 			if(d[1] == datatotal[0][5]) 
@@ -149,14 +169,29 @@ var margin = {top: 15, right: 10, bottom: 10, left: 0},
 	      })	
 	      .attr('width', function(d) {return (x(new Date(d[6]))-x(new Date(d[5])))})
 	      .style("fill", function(d) {
-	        if(d[2]==datatotal[0][0]){
+	        if(d[2]==datatotal[0][0])
 	          return "#5EB72A";
-	        }
 	        else 
 	          return "#CCCCCC";
 	      })
+	      .attr('opacity', function(d) {
+	      	if(d[1] == datatotal[0][5])
+	          return 1;
+	        else 
+	          return 0.7;
+	      })
 	      .on('mouseover', tip.show)
 	      .on('mouseout', tip.hide)
+	      .on('click', function(d) {
+	      	$("#chosenFlightNumber").text(d[0]);
+	      	$("#chosenFlightDate").text(d[1]);
+	      	$("#chosenFlightDept").text(timeFormat(d[5],d[6]).depart);
+	      	$("#chosenFlightArr").text(timeFormat(d[5],d[6]).arrive);
+	      	$("#chosenFlightType").text(d[7]);
+	      	$("#chosenFlightPrice").text(d[2]);
+	      	$("#figure1").slideUp();
+	      	$("#chart1").slideDown();
+	      })
 
 	    svg.selectAll('.chart')
 	      .data(dataset)
@@ -214,3 +249,5 @@ var margin = {top: 15, right: 10, bottom: 10, left: 0},
       .style("fill", "none")
       .style("stroke", "#000")
       .style("shape-rendering", "crispEdges")
+
+    $("#zone2").hide();

@@ -346,15 +346,29 @@ text {
    height: 100px;
 }
 
-#figure2 {
-    width: 50%;
-    float: left;
-    height: 100px;
-    background-color: #CCC;
+#chart1 {
+    text-align: left;
+    height: 130px;
+    color: white;
+    padding: 0px;
+    margin: 5px 0px;
+    -webkit-transition: display .5s ease-in-out;
 }
-#figure3 {
-    width: 50%;
-    height: 100px;
-    float: right;
-    background-color: #CCC;
+
+#chart1 > div:first-child {
+    background-color: #4285f4;
+    padding: 5px 15px;
+}
+
+#changeBtn2 {
+    margin: 93px 0px 0px 0px;
+}
+
+.sample-show-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.sample-show-hide.ng-hide {
+  display: none;
 }
